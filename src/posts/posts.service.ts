@@ -1,10 +1,8 @@
 /* eslint-disable prettier/prettier */
-// posts.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-// import { Prisma } from '@prisma/client';
 import { CreatePostDto } from './dto/create-post.dto';
-import { Post as PostModel } from './interfaces/post.interface'; // Importuj Post interface
+import { Post as PostModel } from './interfaces/post.interface';
 import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
 
 @Injectable()
@@ -12,7 +10,6 @@ export class PostsService {
   constructor(private prisma: PrismaService) {}
 
   async addComment(postId: string, createCommentDto: CreateCommentDto) {
-    // Ovde dodaj logiku za dodavanje komentara u bazu podataka
     return this.prisma.comment.create({
       data: {
         postId: Number(postId),
@@ -22,10 +19,9 @@ export class PostsService {
   }
 
   async getComments(postId: string) {
-    // Ovde dodaj logiku za dobijanje komentara iz baze podataka
     return this.prisma.comment.findMany({
       where: { postId: Number(postId) },
-      orderBy: { createdAt: 'desc' }, // Sortiranje komentara po datumu kreiranja
+      orderBy: { createdAt: 'desc' },
     });
   }
 
@@ -65,6 +61,4 @@ export class PostsService {
       },
     });
   }
-
-  // Ostale metode...
 }
