@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  user      String    // Korisničko ime osobe koja je objavila post
+  title     String    @db.VarChar(255)
+  content   String    @db.Text
+  image     String?   @db.Text // Može biti URL slike ili neki drugi format po tvom izboru
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  // Dodajemo relaciju prema Comment modelu
+  comments  Comment[] @relation("PostComments")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      String?
+  parentId  Int?
+  parent    Comment? @relation("CommentChildren", fields: [parentId], references: [id])
+  post      Post    @relation("PostComments", fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  children  Comment[] @relation("CommentChildren")
+}
+
+
