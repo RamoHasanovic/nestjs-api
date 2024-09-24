@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 export interface Post {
-  id?: number; // Ako je ID automatski generiran od strane baze
+  id?: number; // Ako je ID automatski generiran od baze
   user: string;
   title: string;
   content: string;
-  image?: string; // Ovaj polje je opcionalno
-  createdAt?: Date; // Ako želiš da se datumi automatski postave
+  image?: string; // Ovo polje je opcionalno
+  createdAt?: Date; // Da se datumi automatski postave
 }

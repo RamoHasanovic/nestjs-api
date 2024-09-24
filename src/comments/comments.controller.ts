@@ -9,7 +9,7 @@ export class CommentsController {
 
   @Post(':postId/comments')
   async addComment(
-    @Param('postId') postId: string, // Pretpostavka je da je postId string
+    @Param('postId') postId: string, // Pretpostavka da je postId string
     @Body() createCommentDto: CreateCommentDto,
   ) {
     const numericPostId = parseInt(postId, 10);

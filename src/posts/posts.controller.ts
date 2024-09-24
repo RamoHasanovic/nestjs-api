@@ -53,7 +53,7 @@ export class PostsController {
     @Param('id') id: string, // Ovdje id dolazi kao string
     @Body() updatePostDto: CreatePostDto,
   ): Promise<PostModel> {
-    return this.postsService.updatePost(id, updatePostDto); // Prosledi id kao string
+    return this.postsService.updatePost(id, updatePostDto); // Proslijediti id kao string
   }
 
   // @Delete(':id')

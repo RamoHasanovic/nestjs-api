@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -17,6 +15,9 @@ import { Post as PostModel } from './posts/interfaces/post.interface';
 
 @Controller('posts')
 export class AppController {
+  getHello(): any {
+    throw new Error('Method not implemented.');
+  }
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
