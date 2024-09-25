@@ -10,11 +10,13 @@ import {
   Body,
   Param,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostModel } from './interfaces/post.interface'; // Importuj Post interface
 import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('posts')
 export class PostsController {
@@ -25,6 +27,7 @@ export class PostsController {
     return this.postsService.getAllPosts();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<PostModel> {
     return this.postsService.getPostById(id);
@@ -43,6 +46,7 @@ export class PostsController {
     return this.postsService.addComment(postId, createCommentDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':postId/comments')
   async getComments(@Param('postId') postId: string) {
     return this.postsService.getComments(postId);
