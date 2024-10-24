@@ -9,10 +9,10 @@ import { CreateCommentDto } from 'src/comments/dto/create-comment.dto';
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  async addComment(postId: string, createCommentDto: CreateCommentDto) {
+  async addComment(postId: number, createCommentDto: CreateCommentDto) {
     return this.prisma.comment.create({
       data: {
-        postId: Number(postId),
+        postId,
         ...createCommentDto,
       },
     });
@@ -25,10 +25,12 @@ export class PostsService {
     });
   }
 
-  async getPostById(id: string): Promise<PostModel> {
-    const numericId = parseInt(id, 10);
+  async getPostById(id: number): Promise<PostModel> {
     const post = await this.prisma.post.findUnique({
-      where: { id: numericId },
+      where: { id },
+      include: {
+        comments: true,
+      },
     });
 
     if (!post) {
@@ -48,10 +50,9 @@ export class PostsService {
     return this.prisma.post.findMany();
   }
 
-  async updatePost(id: string, data: CreatePostDto): Promise<PostModel> {
-    const numericId = parseInt(id, 10);
+  async updatePost(id: number, data: CreatePostDto): Promise<PostModel> {
     return this.prisma.post.update({
-      where: { id: numericId },
+      where: { id },
       data: {
         user: data.user,
         title: data.title,

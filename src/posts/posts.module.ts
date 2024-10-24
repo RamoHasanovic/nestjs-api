@@ -9,6 +9,6 @@ import { PrismaModule } from '../prisma/prisma.module';
   imports: [PrismaModule],
   providers: [PostsService],
   controllers: [PostsController],
-  exports: [PostsService], // Ako želiš da PostService bude dostupan izvan ovog modula
+  // exports: [PostsService], // Ako želiš da PostService bude dostupan izvan ovog modula
 })
 export class PostsModule {}
