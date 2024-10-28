@@ -8,16 +8,16 @@ import {
   Delete,
   Body,
   Param,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts/posts.service';
 import { CreatePostDto } from './posts/dto/create-post.dto';
 import { Post as PostModel } from './posts/interfaces/post.interface';
+import { RequiredUserCreatePostDto } from './posts/dto/require-user-create-post.dto';
 
 @Controller('posts')
 export class AppController {
-  getHello(): any {
-    throw new Error('Method not implemented.');
-  }
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
@@ -32,6 +32,13 @@ export class AppController {
 
   @Post()
   async create(@Body() createPostDto: CreatePostDto): Promise<PostModel> {
+    return this.postsService.createPost(createPostDto);
+  }
+
+  @Post('/alternate')
+  async createAlternate(
+    @Body() createPostDto: RequiredUserCreatePostDto,
+  ): Promise<PostModel> {
     return this.postsService.createPost(createPostDto);
   }
 

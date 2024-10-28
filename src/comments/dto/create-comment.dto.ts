@@ -1,14 +1,14 @@
-/* eslint-disable prettier/prettier */
-export class CreateCommentDto {
-  readonly postId: number;
-  readonly user?: string;
-  readonly text: string;
-  readonly parentId?: number;
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-  constructor(postId: number, text: string, user?: string, parentId?: number) {
-    this.postId = postId;
-    this.text = text;
-    this.user = user;
-    this.parentId = parentId;
-  }
+export class CreateCommentDto {
+  @IsString()
+  @IsOptional()
+  readonly user?: string;
+
+  @IsString()
+  readonly text: string;
+
+  @IsNumber()
+  @IsOptional()
+  readonly parentId?: number;
 }
